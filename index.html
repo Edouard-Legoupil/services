@@ -75,11 +75,10 @@
                 <a href="http://data.unhcr.org/syrianrefugees/country.php?id=107"  target="_blank"/><img  src="images/coordination1.png"><br ><small>Interagency Response</small></a>
             </td>
             <td >
-                The information presented here is served from an online platform:
-                 <a href="https://www.syrianrefugeeresponse.org"  target="_blank"/>SyrianRefugeeResponse.Org</a>,
-                  based on <a href="http://about.activityinfo.org/feature/flexible/"  target="_blank"/>ActivityInfo</a>. 
-                  The system is administered by <a href="http://www.unhcr.jo"  target="_blank"/>UNHCR</a> and available to humanitarian partners working
-                   in different sectors throughout Jordan.<br >
+                The information presented here is served from the <a href="https://www.syrianrefugeeresponse.org"  target="_blank"/>SyrianRefugeeResponse.Org</a> online platform. <small>(
+                  based on <a href="http://about.activityinfo.org/feature/flexible/"  target="_blank"/>ActivityInfo</a>)</small>. 
+                  The system is administered by <a href="http://www.unhcr.jo"  target="_blank"/>UNHCR</a> and is available to humanitarian partners working
+                   in different sectors throughout Jordan. Contact <a href="mailto:joramimf@unhcr.org?subject=ServiceMap">UNHCR Information Management</a> to register.<br >
                    <b>Data collection and validation is a continuous process,
                       and relies on actors keeping their information up to date in the system</b> .  
            </td>
@@ -112,7 +111,24 @@ var baseMaps = {
     "Open Street Map":osm
 };
 
+var LeafIcon = L.Icon.extend({
+    options: {
+        shadowUrl: 'images/leaf-shadow.png',
+        iconSize:     [38, 95],
+        shadowSize:   [50, 64],
+        iconAnchor:   [22, 94],
+        shadowAnchor: [4, 62],
+        popupAnchor:  [-3, -76]
+    }
+});
 
+var greenIcon = new LeafIcon({iconUrl: 'images/leaf-green.png'}),
+    redIcon = new LeafIcon({iconUrl: 'images/leaf-red.png'}),
+    orangeIcon = new LeafIcon({iconUrl: 'images/leaf-orange.png'});
+
+L.icon = function (options) {
+    return new L.Icon(options);
+};
 
 function popUp(f,l){
     var out = [];
@@ -123,22 +139,50 @@ function popUp(f,l){
         l.bindPopup(out.join("<br />"));
     }
 }
-var jsonTest = L.geoJson.ajax("https://www.syrianrefugeeresponse.org/resources/sites/points?activity=4773",{onEachFeature:popUp,dataType:"jsonp"});
-var jsonpTest = L.geoJson.ajax("https://www.syrianrefugeeresponse.org/resources/sites/points?activity=4772",{onEachFeature:popUp,dataType:"jsonp"});
-var jsonpTesta = L.geoJson.ajax("https://www.syrianrefugeeresponse.org/resources/sites/points?activity=4775",{onEachFeature:popUp,dataType:"jsonp"});
-var jsonpTestb = L.geoJson.ajax("https://www.syrianrefugeeresponse.org/resources/sites/points?activity=4799",{onEachFeature:popUp,dataType:"jsonp"});
-var jsonpTestc = L.geoJson.ajax("https://www.syrianrefugeeresponse.org/resources/sites/points?activity=4777",{onEachFeature:popUp,dataType:"jsonp"});
+
+// Cash Services
+var jsonTest = L.geoJson.ajax("https://www.syrianrefugeeresponse.org/resources/sites/points?activity=5574",{onEachFeature:popUp,dataType:"jsonp"});
+
+// NFI Services
+var jsonpTest = L.geoJson.ajax("https://www.syrianrefugeeresponse.org/resources/sites/points?activity=5601",{onEachFeature:popUp,dataType:"jsonp"});
+
+// Food Services
+var jsonpTesta = L.geoJson.ajax("https://www.syrianrefugeeresponse.org/resources/sites/points?activity=5579",{onEachFeature:popUp,dataType:"jsonp"});
+
+
+// Child Protection
+var jsonpTestb = L.geoJson.ajax("https://www.syrianrefugeeresponse.org/resources/sites/points?activity=5603",{onEachFeature:popUp,dataType:"jsonp"});
+
+
+// Shelter rehabilitations
+var jsonpTestc = L.geoJson.ajax("https://www.syrianrefugeeresponse.org/resources/sites/points?activity=5610",{onEachFeature:popUp,dataType:"jsonp"});
 
 jsonTest.addTo(m);
 var overlays={
-"Activity Cash":jsonTest,
-"Activity Cash":jsonpTest,
-"Activity Education":jsonpTesta,
-"Activity Food":jsonpTestb,
-"Activity NFI":jsonpTestc
+"Cash Needs Coverage":jsonTest,
+"NFI Basic needs":jsonpTest,
+"Food Security":jsonpTesta,
+"Child Protection":jsonpTestb,
+"Shelter rehabilitation":jsonpTestc
 }
 
-var lc=L.control.layers(baseMaps,overlays);
+
+var myButtonOptions = {
+      'text': 'Browse between Services',  // string
+     // 'iconUrl': 'images/myButton.png',  // string
+     // 'onClick': my_button_onClick,  // callback function
+    //  'hideText': true,  // bool
+      'maxWidth': 100,  // number
+    //  'doToggle': false,  // bool
+    //  'toggleStatus': false,  // bool
+      'collapsed': false
+}  
+
+ //  .extend({ options: { collapsed: false}})
+
+
+var lc=L.control
+    .layers(baseMaps,overlays);
 lc.addTo(m);
 </script>
 </body>
