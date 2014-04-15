@@ -1,79 +1,129 @@
 <!DOCTYPE html>
 <html>
+<head>
+<meta charset=utf-8 />
+<title>Services to Refugee Population in Jordan</title>
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Services : Services" />
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+<script src="javascripts/jquery-1.6.2.min.js"></script>
 
-    <title>Services</title>
-  </head>
-
-  <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/Edouard-Legoupil/services">View on GitHub</a>
-
-          <h1 id="project_title">Services</h1>
-          <h2 id="project_tagline">Services</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/Edouard-Legoupil/services/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/Edouard-Legoupil/services/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Services maintained by <a href="https://github.com/Edouard-Legoupil">Edouard-Legoupil</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
+<link href="http://www.unhcr.org/favicon.ico" rel="icon" type="image/x-icon">
     
 
-  </body>
+<style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+  
+        .overlay {
+            position:absolute; 
+            padding: 6px 8px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            color: #223;
+            background-color:rgba(255,255,255,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
+        .title {
+            text-align:center;
+            top:10px;
+            right:20%;
+            left:20%;
+        }
+        .footer {
+            bottom:10px;
+            left:130px;
+        }
+        .box {
+            bottom:90px;
+            left:90px;
+        }
+        .logo-unhcr {
+          bottom:15;
+          left:10;
+          z-index:1;
+        }
+        .popup {
+            text-align: center;
+        }
+
+        .popup  .image {
+            display: none;
+        }
+        .popup  .active {
+            display: block;
+        }
+        .popup  .img {
+            width: 100%;
+        }
+
+</style>
+</head>
+<body>
+
+
+<div id='map'></div>
+
+<div class="overlay title"> <h2>Services Available to Refugees in Jordan </h2> </div>
+<div class="overlay footer">
+    <table >
+        <tr>
+            <td>
+                <a href="http://data.unhcr.org/syrianrefugees/country.php?id=107"  target="_blank"/><img  src="images/coordination1.png"><br ><small>Interagency Response</small></a>
+            </td>
+            <td >
+                The information presented here is served from an online platform:
+                 <a href="https://www.syrianrefugeeresponse.org"  target="_blank"/>SyrianRefugeeResponse.Org</a>,
+                  based on <a href="http://about.activityinfo.org/feature/flexible/"  target="_blank"/>ActivityInfo</a>. 
+                  The system is administered by <a href="http://www.unhcr.jo"  target="_blank"/>UNHCR</a> and available to humanitarian partners working
+                   in different sectors throughout Jordan.<br >
+                   <b>Data collection and validation is a continuous process,
+                      and relies on actors keeping their information up to date in the system</b> .  
+           </td>
+        </tr>
+    </table>
+</div>
+
+
+
+
+<script>
+var map = L.mapbox.map('map', 'unhcr.map-8bkai3wa')
+    .setView([31.59809, 36.36304], 8);
+
+// define how the layer is styled on the map
+var layerOptions = {
+    pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, {
+            radius: 8,
+            fillColor: "#ff7800",
+            color: "#000",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+        });
+    },
+    onEachFeature: function (feature, layer) {
+        layer.bindPopup(feature.properties.locationName);
+    }
+};
+
+// fetch the data from the ActivityInfo server asynchronously
+// using jquery
+$.ajax({
+    type: "GET",
+   /// url: "https://www.activityinfo.org/resources/sites/points?activity=4772&callback=?",
+    url: "https://www.activityinfo.org/resources/sites/points?activity=4772&4773&4774&4775&4776&4777&4778&4779&4780&4781&4782&4783&4784&4785&4786&4787&4788&4789&4790&4791&4792&4793&4794&4795&4796&4797&4798&4799&4800&4801&4802&4803&4804&4805&4806&4807&4808&4809&4810&4811&4812&callback=?",
+    dataType: 'jsonp',
+    success: function (json) {
+        L.geoJson(json, layerOptions).addTo(map);
+    },
+    error: function () {
+        alert("Error");
+    },
+});
+</script>
+</body>
 </html>
